@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Masalar</title>
+    <link rel='stylesheet' href='/assets/css/login.css'>
+    <link rel='stylesheet' href='/assets/css/style.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div>
+
+</div>
+<div class="modal">
+    <div class="modal__inner">
+        <div class="modal__header">
+            <h2>Masalar <br><button onclick="return createTable();">Masa Oluştur</button></h2>
+            Online Sayısı: <span class="onlineCount">0</span> | Masa Sayısı: <span class="tableCount">0</span>
+        </div>
+        <div class="modal__footer tables">
+
+        </div>
+        <div class="status disconnected"></div>
+        Online Kullanıcılar: <div class="onlineUsers"></div>
+
+    </div>
+</div>
+
+</body>
+</html>
+<script src="/assets/js/client.js"></script>
+<script src="/assets/js/table.js"></script>
+<script src="/assets/js/ws-client.js"></script>
+<script>
+    $(function(){
+        if(checkIsLogined()){
+            onLoad();
+        }
+    });
+</script>

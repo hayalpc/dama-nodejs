@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oyun</title>
+    <link rel='stylesheet' href='/assets/css/login.css'>
+    <link rel='stylesheet' href='/assets/css/style.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div style="text-align: center">
+    <canvas id="board" width="500" height="400"
+            style="border:1px solid #c3c3c3; margin:auto 0;">
+        Your browser does not support the canvas element.
+    </canvas>
+    <div id="score_card"></div>
+</div>
+
+
+</body>
+</html>
+<script src="/assets/js/client.js"></script>
+<script src="/assets/js/table.js"></script>
+<script src="/assets/js/ws-client.js"></script>
+<script src="/assets/js/game.js"></script>
+<script>
+    $(function(){
+        if(checkIsLogined()){
+            onLoad('game');
+            // initializeGame();
+        }
+
+    });
+</script>

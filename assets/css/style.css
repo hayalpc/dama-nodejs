@@ -1,0 +1,46 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+
+
+body {
+    background: #fff;
+}
+
+.status {
+    width: 15px;
+    height: 15px;
+    border-radius: 100% 100%;
+    position: absolute;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    right: 20px;
+    top: 30px;
+}
+
+.disconnected{
+    background: red;
+}
+
+.connected{
+    background: green;
+}
+
+
+.tablee{
+    width: 40%;
+    float: left;
+    height: 60px;
+    background: #d2cbcb;
+    border: 1px solid #a0a2a0;
+    padding: 5px 10px;
+    margin-right: 10px;
+}

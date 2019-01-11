@@ -1,0 +1,23 @@
+{
+  "name": "dama",
+  "version": "1.0.0",
+  "description": "Dama By Nodejs ",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon ./server",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "dama",
+    "nodejs",
+    "game",
+    "socket"
+  ],
+  "author": "Erdinç Karaman (erdinc.karaman@yandex.com)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "ws": "^6.1.2"
+  }
+}
