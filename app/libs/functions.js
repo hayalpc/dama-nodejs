@@ -8,9 +8,18 @@ lib.users = {};
 lib.tables = {};
 lib.rooms = {};
 
+lib.getSocket = (username) => {
+    if (username !== undefined) {
+        let user = lib.users[username];
+        if(user !== undefined){
+            return lib.clients[user.socketId];
+        }
+    }
+    return false
+};
+
 ////////////////////////////USER///////////////////////
 lib.functions['login'] = (data, socket) => {
-    console.log(data);
     if (lib.users[data.username] === undefined) {
         let user = new User("", data.username, socket.id);
 
@@ -92,8 +101,8 @@ lib.functions['joinTable'] = (data, socket) => {
         if (table.oppenent === undefined) {
             table.oppenent = data.apponent;
             table.status = 1;
-            let createrSocket = lib.clients[lib.users[table.creater].socketId];
-            let oppenentSocket = lib.clients[lib.users[table.oppenent].socketId];
+            let createrSocket = lib.getSocket(table.creater);
+            let oppenentSocket = lib.getSocket(table.oppenent);
             let redirect = {
                 action: 'startGame',
                 data: {
@@ -156,7 +165,7 @@ lib.functions['refreshCounts'] = () => {
 
 ////////////////////////////SOCKET///////////////////////
 lib.functions['sendMessage'] = (data, socket) => {
-    if (socket.readyState === 1) {
+    if (socket !== undefined && socket.readyState === 1) {
         socket.send(JSON.stringify(data));
     }
 };
@@ -187,26 +196,63 @@ module.exports = lib;
 
 
 lib.functions['startGame'] = (data, socket) => {
+    if (lib.tables[data.tableId] === undefined) {
+        lib.tables[data.tableId] = new Table('ekaraman75', 'ekaraman75');
+        lib.tables[data.tableId].oppenent = "ekaraman69";
+        lib.tables[data.tableId].oppenentStatus = 0;
+        lib.tables[data.tableId].status = 1;
+        lib.tables[data.tableId].id = data.tableId;
+    }
     let table = lib.tables[data.tableId];
-    if (table.creater === socket.user.username) {
+    if (table !== undefined && table.creater === socket.user.username) {
         table.createPieces();
-        console.log(table.blackPieceTracker);
-        console.log(table.redPieceTracker);
-        let createSocket = lib.clients[table.creater];
-        let oppenentSocket = lib.clients[table.oppenent];
-
+        let createSocket = lib.getSocket(table.creater);
+        let oppenentSocket = lib.getSocket[table.oppenent];
+        table.status = 3;
         let piecesData = {
             action: 'drawPieces',
             data: {
                 pieces: table.redPieceTracker,
-                oppenentPieces: table.blackPieceTracker
             }
         };
-        lib.functions['sendMessage'](piecesData, createSocket);
+        lib.functions['sendMessage'](piecesData, socket);
+        if (oppenentSocket !== undefined) {
+            piecesData['data']['pieces'] = table.blackPieceTracker;
+            piecesData['data']['oppenentPieces'] = table.redPieceTracker;
+            lib.functions['sendMessage'](piecesData, oppenentSocket);
+        }
+    } else {
 
-        piecesData['data']['pieces'] = table.blackPieceTracker;
-        piecesData['data']['oppenentPieces'] = table.redPieceTracker;
-        lib.functions['sendMessage'](piecesData, oppenentSocket);
+        if (table !== undefined && table.status !== 3) {
+            let redirect = {
+                action: 'waiting',
+                data: {
+                    tableId: table.id
+                }
+            };
+            lib.functions['sendMessage'](redirect, socket);
+        } else if (table !== undefined && table.status === 3) {
+            if (socket !== undefined) {
+                let piecesData = {
+                    action: 'drawPieces',
+                    data: {
+                        pieces: table.blackPieceTracker,
+                    }
+                };
+                lib.functions['sendMessage'](piecesData, socket);
+
+
+            }
+        } else {
+            console.log('yok');
+            // let redirect = {
+            //     action: 'redirect',
+            //     data: {
+            //         tableId: table.id
+            //     }
+            // };
+            // lib.functions['sendMessage'](redirect, createrSocket);
+        }
     }
 
 
