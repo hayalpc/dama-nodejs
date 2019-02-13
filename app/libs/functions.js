@@ -1,5 +1,5 @@
-let Table = require('./Tables');
-let User = require('./User');
+let Table = require('../models/Tables');
+let User = require('../models/Users');
 
 let lib = {};
 lib.functions = {};
@@ -7,6 +7,8 @@ lib.clients = {};
 lib.users = {};
 lib.tables = {};
 lib.rooms = {};
+
+module.exports = lib;
 
 lib.getSocket = (username) => {
     if (username !== undefined) {
@@ -94,7 +96,6 @@ lib.functions['removeTable'] = (tableId) => {
     const data = {action: 'removeTable', data: {tableId: tableId}};
     lib.functions['broadCast'](data);
 };
-
 lib.functions['joinTable'] = (data, socket) => {
     let table = lib.tables[data.tableId];
     if (table !== undefined) {
@@ -192,7 +193,6 @@ lib.functions['close'] = (socket) => {
 };
 ////////////////////////////END SOCKET///////////////////////
 
-module.exports = lib;
 
 
 lib.functions['startGame'] = (data, socket) => {

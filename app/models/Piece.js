@@ -1,4 +1,4 @@
-function piece(x,y,k,c)
+function Piece(x,y,k,c)
 {
     // Set the column, row, king, and color for each piece
     this.col = x;
@@ -7,4 +7,4 @@ function piece(x,y,k,c)
     this.color = c;
 }
 
-module.exports = piece;
+module.exports = Piece;

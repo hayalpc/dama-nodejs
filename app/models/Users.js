@@ -1,6 +1,6 @@
 const guid = require('./guid');
 
-function User(name,username,socket) {
+function Users(name,username,socket) {
     this.socketId = socket;
     this.tableId = undefined;
     this.name = name;
@@ -8,4 +8,4 @@ function User(name,username,socket) {
     this.id = guid();
 }
 
-module.exports = User;
+module.exports = Users;
